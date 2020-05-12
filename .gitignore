@@ -1,0 +1,8 @@
+/dist
+/bin
+/obj
+
+/env.xml
+
+/.vs
+

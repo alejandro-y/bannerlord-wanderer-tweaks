@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="env.xml"/>
+
+    <PropertyGroup>
+        <AssemblyVersion>0.1.0</AssemblyVersion>
+        <FileVersion>$(AssemblyVersion).0</FileVersion>
+        <PlatformTarget>x64</PlatformTarget>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <Exec Command="powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -File .\PostBuild.ps1 -Name &quot;$(ProjectName)&quot; -Dll &quot;$(TargetPath)&quot; -Game &quot;$(GamePath)&quot; -Config $(Configuration)" />
+    </Target>
+
+    <ItemGroup>
+      <Reference Include="$(GamePath)\bin\Win64_Shipping_Client\System.*.dll">
+        <HintPath>%(Identity)</HintPath>
+        <Private>False</Private>
+      </Reference>
+      <Reference Include="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.*.dll" Exclude="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds.Starter.DotNetCore.dll">
+        <HintPath>%(Identity)</HintPath>
+        <Private>False</Private>
+      </Reference>
+    </ItemGroup>
+</Project>
